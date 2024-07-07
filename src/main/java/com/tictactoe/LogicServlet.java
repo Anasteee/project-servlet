@@ -50,6 +50,19 @@ public class LogicServlet extends HttpServlet {
             if (checkWin(resp, currentSession, field)) {
                 return;
             }
+        } else {
+            // Додаємо до сесії прапорець, який сигналізує, що відбулася нічия
+            currentSession.setAttribute("draw", true);
+
+            // Рахуємо список значків
+            List<Sign> data = field.getFieldData();
+
+            // Оновлюємо цей список у сесії
+            currentSession.setAttribute("data", data);
+
+            // Шлемо редирект
+            resp.sendRedirect("/index.jsp");
+            return;
         }
 
         // Рахуємо список значків
@@ -70,7 +83,7 @@ public class LogicServlet extends HttpServlet {
 
     private Field extractField(HttpSession currentSession) {
         Object fieldAttribute = currentSession.getAttribute("field");
-        if (fieldAttribute == null || Field.class != fieldAttribute.getClass()) {
+        if (Field.class != fieldAttribute.getClass()) {
             currentSession.invalidate();
             throw new RuntimeException("Session is broken, try one more time");
         }

@@ -19,7 +19,7 @@ public class InitServlet extends HttpServlet {
 
         // Створення ігрового поля поля
         Field field = new Field();
-//        Map<Integer, Sign> fieldData = field.getField();
+        Map<Integer, Sign> fieldData = field.getField();
 
         // Отримання списку значень поля
         List<Sign> data = field.getFieldData();
